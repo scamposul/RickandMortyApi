@@ -27,7 +27,7 @@ const Pagination = ({page, setPage, max}) => {
     return (
         <div className='Pagination'>
             <button onClick={prevPage}>Prev</button>
-            <input name='page' autocomplete='off' value={input}/>
+            <input className='inputPag' name='page' autocomplete='off' value={input}/>
             <p>of {max}</p>
             <button onClick={nextPage}>Next</button>
         </div>

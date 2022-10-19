@@ -6,12 +6,13 @@ import Pagination from "./components/Pagination";
 
 function App() {
   const [location, setLocation] = useState({});
-  const [typeID, setTypeID] = useState(1);
+  const [allLocations, setAllLocations] = useState([]);
+  const [singleLocation, setSingleLocation] = useState('');
+  const [typeID, setTypeID] = useState();
   const [page, setPage] = useState(1);
   const [eachPage, setEachPage] = useState(5);
 
   const max = Math.trunc(location.residents?.length / eachPage) + 1;
-
 
   const randomLocation = Math.floor(Math.random() * 126);
 
@@ -21,17 +22,22 @@ function App() {
       .then((res) => setLocation(res.data));
   }, []);
 
-  const searchType = () => {
-    axios.get(`https://rickandmortyapi.com/api/location/${typeID}`)
-      .then((res) => 
-      setLocation(res.data));
-      setPage(1);
-  };
 
+  const getLocationId = () =>  {
+    axios.get('https://rickandmortyapi.com/api/location')
+      .then(res => setAllLocations(res.data.results));
+      const filtered = allLocations.filter((location) =>
+      location.name.toLowerCase().includes(typeID.toLowerCase()));
+    setSingleLocation(filtered);
+    axios
+    .get(`https://rickandmortyapi.com/api/location/${singleLocation[0]?.id}`)
+    .then((res) => setLocation(res.data));
+     setPage(1);
+  }
 
   const enterKey = (event) => {
     if (event.key === "Enter") {
-      searchType();
+      getLocationId();
       setPage(1);
     }
   };
@@ -39,33 +45,47 @@ function App() {
   return (
     <div className="App">
       <nav></nav>
-      <input
-        type="text"
-        value={typeID}
-        onChange={(e) => setTypeID(e.target.value)}
-        onKeyDown={enterKey}
-      />
-      <button type="sumbit" onClick={searchType}>
-        Search
-      </button>
-      <div className="locData">
-      <p>population: {location.residents?.length}</p>
-      <br />
-      <h2>{location.name}</h2>
-      <br />
-      <p>type: {location.type}</p>
-      <br />
-      <p>Dimension: {location.dimension}</p>
-      <br />
+      <div className="all">
+        <h1>Rick & Morty Wiki</h1>
+        <input
+          type="text"
+          value={typeID}
+          onChange={(e) => setTypeID(e.target.value)}
+          onKeyDown={enterKey}
+          placeholder="Type a location name"
+        />
+        <button type="sumbit" onClick={getLocationId}>
+          Search
+        </button>
+        <h2>{location.name}</h2>
+        <div className="locData">
+          <div className="population">
+            <p><b>Population: </b></p>
+            <p>{location.residents?.length}</p>
+          </div>
+          <br />
+          <div className="location">
+            <p><b>Type: </b></p>
+            <p>{location.type}</p>
+          </div>
+          <br />
+          <div className="dimension">
+            <p><b>Dimension: </b></p>
+            <p>{location.dimension}</p>
+          </div>
+          <br />
+        </div>
+        <br />
+        <h2>Residents</h2>
+        <Pagination page={page} setPage={setPage} max={max} />
+        <div className="box">
+          {location.residents
+            ?.slice((page - 1) * eachPage, (page - 1) * eachPage + eachPage)
+            .map((resident) => (
+              <Characters resident={resident} key={resident} />
+            ))}
+        </div>
       </div>
-      <div className="box">
-        {location.residents?.
-        slice((page - 1) * eachPage, (page - 1) * eachPage + eachPage)
-        .map((resident) => (
-          <Characters resident={resident} key={resident} />
-        ))}
-      </div>
-      <Pagination page={page} setPage={setPage} max={max}/>
     </div>
   );
 }

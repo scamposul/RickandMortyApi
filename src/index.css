@@ -6,7 +6,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: rgb(29, 27, 27);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -25,16 +25,16 @@ a:hover {
 }
 
 body {
-  margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  font-weight: 500;
 }
 
 button {
@@ -44,7 +44,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: rgb(29, 27, 27);
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -70,41 +70,54 @@ button:focus-visible {
 }
 
 nav {
-  background-image: url('./nav.jpg');
-  padding-top: 20rem;
+  background-image: url('./nav.png');
+  padding-top: 18rem;
   width: 100%;
-
+  margin-top: 0;
 }
 
 img {
-  width: 100%;
+  width: 70%;
+  border-radius: 3%;
 }
 
 input {
-  width: 2rem;
-  height: 1rem;
+  width: 20rem;
+  height: 2rem;
+}
+
+li {
+  list-style: none;
 }
 
 .locData {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  gap: 3rem;
   flex-direction: row;
   width: 60rem;
   margin: auto;
+  background: #242424;
+  border-radius: 2%;
 }
 
 .box {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   width: auto;
-
 }
 
 .container {
-  border: 1px solid white;
+  display: flex;
+  align-items: stretch;
+  border-radius: 3%;
   padding: 1rem;
   margin: 0.5rem;
+  background: #242424;
+  width: 28rem;
+  gap: 1rem;
+  width: 34rem;
+  height: 23rem;
 }
 
 .Pagination {
