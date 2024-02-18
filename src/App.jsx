@@ -30,7 +30,7 @@ function App() {
       location.name.toLowerCase().includes(typeID.toLowerCase()));
     setSingleLocation(filtered);
     axios
-    .get(`https://rickandmortyapi.com/api/location/${singleLocation[0]?.id}`)
+    .get(`https://rickandmortyapi.com/api/location/${singleLocation[0]?.id ? singleLocation[0]?.id : 1}`)
     .then((res) => setLocation(res.data));
      setPage(1);
   }
